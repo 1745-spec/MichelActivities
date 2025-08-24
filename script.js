@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dotCenter = dotRect.left + dotRect.width / 2;
 
         const position = (dotCenter - lineRect.left) / lineRect.width;
-        const temp = Math.round((position * 40) - 20); // Range is -20 to +20
+        const temp = Math.round((position * 60) - 30); // Range is -30 to +30
         tempVal.textContent = temp;
     };
 
@@ -100,3 +100,4 @@ document.addEventListener('DOMContentLoaded', () => {
     handleFileSelect(fileA, imgA);
     handleFileSelect(fileB, imgB);
 });
+
