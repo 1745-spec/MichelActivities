@@ -23,24 +23,33 @@ document.addEventListener('DOMContentLoaded', () => {
         tempVal.textContent = temp;
     };
 
-    const handleMouseDown = (e) => {
+    // --- Unified Event Handlers for Mouse and Touch ---
+    const startDrag = (e) => {
+        // Prevent default browser behavior like scrolling on touch
+        e.preventDefault(); 
+        
         activeDot = e.target;
-        offsetX = e.clientX - activeDot.getBoundingClientRect().left;
+        // Use 'e.touches[0].clientX' for touch events, 'e.clientX' for mouse events
+        const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+        offsetX = clientX - activeDot.getBoundingClientRect().left;
         activeDot.style.cursor = 'grabbing';
     };
 
-    const handleMouseMove = (e) => {
+    const moveDrag = (e) => {
         if (!activeDot) return;
         e.preventDefault();
 
+        const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
         const lineRect = numberLine.getBoundingClientRect();
-        let newX = e.clientX - lineRect.left - offsetX;
+        let newX = clientX - lineRect.left - offsetX;
 
+        // Constrain the dot within the number line bounds
         if (newX < 0) newX = 0;
         if (newX > lineRect.width) newX = lineRect.width;
 
         activeDot.style.left = `${newX}px`;
 
+        // Update the temperature display
         if (activeDot.id === 'dotA') {
             updateTemp(dotA, tempAVal);
         } else if (activeDot.id === 'dotB') {
@@ -48,18 +57,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const handleMouseUp = () => {
+    const endDrag = () => {
         if (activeDot) {
             activeDot.style.cursor = 'grab';
             activeDot = null;
         }
     };
 
-    dotA.addEventListener('mousedown', handleMouseDown);
-    dotB.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-    
+    // Add unified event listeners
+    dotA.addEventListener('mousedown', startDrag);
+    dotB.addEventListener('mousedown', startDrag);
+    dotA.addEventListener('touchstart', startDrag);
+    dotB.addEventListener('touchstart', startDrag);
+
+    document.addEventListener('mousemove', moveDrag);
+    document.addEventListener('touchmove', moveDrag);
+
+    document.addEventListener('mouseup', endDrag);
+    document.addEventListener('touchend', endDrag);
+    document.addEventListener('touchcancel', endDrag);
+
     // Initialize temperatures
     updateTemp(dotA, tempAVal);
     updateTemp(dotB, tempBVal);
@@ -73,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 reader.onload = (event) => {
                     imgElement.src = event.target.result;
                     imgElement.style.display = 'block';
-                    imgElement.previousElementSibling.style.display = 'none'; // Hide the 'City A' paragraph
+                    imgElement.previousElementSibling.style.display = 'none';
                 };
                 reader.readAsDataURL(file);
             }
