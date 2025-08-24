@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integer Temperature Bell Ringer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Integer Temperature Bell Ringer</h1>
+        <p>Research two cities with a negative and a positive temperature in December. Drag the dots to plot them on the number line.</p>
+        
+        <div class="input-section">
+            <div class="city-info">
+                <label for="cityA">City A (Positive Temp):</label>
+                <input type="text" id="cityA" placeholder="e.g., San Diego">
+            </div>
+            <div class="city-info">
+                <label for="cityB">City B (Negative Temp):</label>
+                <input type="text" id="cityB" placeholder="e.g., Moscow">
+            </div>
+        </div>
+
+        <div class="number-line-container">
+            <div class="number-line">
+                <div class="dot-A draggable" id="dotA"></div>
+                <div class="dot-B draggable" id="dotB"></div>
+            </div>
+            <div class="labels">
+                <span>-20°</span>
+                <span>-10°</span>
+                <span>0°</span>
+                <span>10°</span>
+                <span>20°</span>
+            </div>
+        </div>
+
+        <div class="temp-display-container">
+            <div class="temp-display">City A: <span id="tempA-val">0</span>°C</div>
+            <div class="temp-display">City B: <span id="tempB-val">0</span>°C</div>
+        </div>
+
+        <div class="statement-section">
+            <h2>Temperature Comparison</h2>
+            <textarea id="comparison-statement" rows="3" placeholder="Write your statement here, e.g., 'City A is warmer than City B.'"></textarea>
+        </div>
+
+        <div class="image-section">
+            <div class="image-uploader">
+                <p>City A</p>
+                <img src="" alt="City A Image" id="imgA">
+                <input type="file" accept="image/*" class="file-input" id="fileA">
+            </div>
+            <div class="image-uploader">
+                <p>City B</p>
+                <img src="" alt="City B Image" id="imgB">
+                <input type="file" accept="image/*" class="file-input" id="fileB">
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+           
